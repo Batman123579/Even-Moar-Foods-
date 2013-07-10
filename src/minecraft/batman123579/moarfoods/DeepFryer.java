@@ -3,12 +3,12 @@ package batman123579.moarfoods;
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
 import java.util.Random;
-import batman123579.moarfoods.*;
 import batman123579.moarfoods.TileEntityDeepFryer;
-import net.minecraft.block.*;
+import net.minecraft.block.Block;
+import net.minecraft.block.BlockContainer;
 import net.minecraft.block.material.Material;
 import net.minecraft.client.renderer.texture.IconRegister;
-import net.minecraft.entity.EntityLiving;
+import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.item.EntityItem;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.inventory.Container;
@@ -34,13 +34,11 @@ public class DeepFryer extends BlockContainer
      * This flag is used to prevent the furnace inventory to be dropped upon block removal, is used internally when the
      * furnace block changes from idle to active and vice-versa.
      */
-    private static boolean keepFurnaceInventory = false;
+    private static boolean keepFurnaceInventory;
     @SideOnly(Side.CLIENT)
     private Icon furnaceIconTop;
     @SideOnly(Side.CLIENT)
     private Icon furnaceIconFront;
-
-
 
     protected DeepFryer(int par1, boolean par2)
     {
@@ -121,7 +119,7 @@ public class DeepFryer extends BlockContainer
     public void registerIcons(IconRegister par1IconRegister)
     {
         this.blockIcon = par1IconRegister.registerIcon("furnace_side");
-        this.furnaceIconFront = par1IconRegister.registerIcon(this.isActive ? "furnace_front_lit" : "furnace_front");
+        this.furnaceIconFront = par1IconRegister.registerIcon(this.isActive ? "furnace_front_on" : "furnace_front_off");
         this.furnaceIconTop = par1IconRegister.registerIcon("furnace_top");
     }
 
@@ -225,9 +223,9 @@ public class DeepFryer extends BlockContainer
     /**
      * Called when the block is placed in the world.
      */
-    public void onBlockPlacedBy(World par1World, int par2, int par3, int par4, EntityLiving par5EntityLiving, ItemStack par6ItemStack)
+    public void onBlockPlacedBy(World par1World, int par2, int par3, int par4, EntityLivingBase par5EntityLivingBase, ItemStack par6ItemStack)
     {
-        int l = MathHelper.floor_double((double)(par5EntityLiving.rotationYaw * 4.0F / 360.0F) + 0.5D) & 3;
+        int l = MathHelper.floor_double((double)(par5EntityLivingBase.rotationYaw * 4.0F / 360.0F) + 0.5D) & 3;
 
         if (l == 0)
         {
@@ -251,7 +249,7 @@ public class DeepFryer extends BlockContainer
 
         if (par6ItemStack.hasDisplayName())
         {
-            ((TileEntityDeepFryer)par1World.getBlockTileEntity(par2, par3, par4)).func_94129_a(par6ItemStack.getDisplayName());
+            ((TileEntityDeepFryer)par1World.getBlockTileEntity(par2, par3, par4)).setGuiDisplayName(par6ItemStack.getDisplayName());
         }
     }
 

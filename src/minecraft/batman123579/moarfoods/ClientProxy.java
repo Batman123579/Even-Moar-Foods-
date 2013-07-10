@@ -1,10 +1,11 @@
 package batman123579.moarfoods;
 
-public class ClientProxy extends ServerProxy{
-	
-	@Override
-	public void registerRenderThings(){
-		
-	}
+import batman123579.moarfoods.CommonProxy;
+import net.minecraftforge.client.MinecraftForgeClient;
+
+public class ClientProxy extends CommonProxy {
+
+public void registerRenderInformation(){
+}
 
 }

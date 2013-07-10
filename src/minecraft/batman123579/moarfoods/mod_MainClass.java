@@ -1,7 +1,6 @@
 package batman123579.moarfoods;
 
 import net.minecraft.block.Block;
-import net.minecraft.block.BlockFurnace;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemFood;
@@ -9,27 +8,34 @@ import net.minecraft.item.ItemStack;
 import cpw.mods.fml.common.Mod;
 import cpw.mods.fml.common.Mod.Init;
 import cpw.mods.fml.common.Mod.Instance;
-import cpw.mods.fml.common.Mod.PostInit;
 import cpw.mods.fml.common.Mod.PreInit;
-import cpw.mods.fml.common.SidedProxy;
 import cpw.mods.fml.common.event.FMLInitializationEvent;
-import cpw.mods.fml.common.event.FMLPostInitializationEvent;
 import cpw.mods.fml.common.event.FMLPreInitializationEvent;
 import cpw.mods.fml.common.network.NetworkMod;
 import cpw.mods.fml.common.network.NetworkRegistry;
 import cpw.mods.fml.common.registry.GameRegistry;
 import cpw.mods.fml.common.registry.LanguageRegistry;
+import cpw.mods.fml.common.network.NetworkMod.SidedPacketHandler;
+import cpw.mods.fml.common.SidedProxy;
+import batman123579.moarfoods.CommonProxy;
 
-@Mod(modid = "evenmoarfood", name = "Even Moar Foods?", version = "Beta 0.2")
-@NetworkMod (clientSideRequired = true, serverSideRequired = false, channels = "MoarFoods", packetHandler = ModPacketHandler.class)
+@NetworkMod(clientSideRequired=true,serverSideRequired=true, //Whether client side and server side are needed
+clientPacketHandlerSpec = @SidedPacketHandler(channels = {"TutorialMod"}, packetHandler = PacketHandler.class), //For clientside packet handling
+serverPacketHandlerSpec = @SidedPacketHandler(channels = {"TutorialMod"}, packetHandler = ServerPacketHandler.class)) //For serverside packet handling
+
+
+@Mod(modid = "evenmoarfood", name = "Even Moar Foods?", version = "Beta 0.3.1")
+
 
 public class mod_MainClass {
 	
-	@SidedProxy(clientSide = "batman123579.moarfoods.ClientProxy", serverSide = "batman123579.moarfoods.ServerProxy")
-	public static ServerProxy proxy;
-	
-	@Instance
-	public static mod_MainClass instance = new mod_MainClass();
+	@SidedProxy(clientSide = "batman123579.evenmoarfoods.ClientProxy", serverSide = "batman123579.evenmoarfoods.CommonProxy") //Tells Forge the location of your proxies
+	public static CommonProxy proxy;
+
+
+@Instance("evenmoarfood") //The instance, this is very important later on
+public static mod_MainClass instance = new mod_MainClass();
+
 	
 	//GUI Stuff
 	private GuiHandler guihandler = new GuiHandler();
@@ -57,13 +63,17 @@ public class mod_MainClass {
 	
 	public static Item FireBurner;
 	
-@PreInit
-public void load(FMLPreInitializationEvent PreEvent){
-	
+	@PreInit
+	public void PreInit(FMLPreInitializationEvent e){
+
 	}
+
 	@Init
-	public void load(FMLInitializationEvent event){
-		proxy.registerRenderThings();
+	public void InitTutorialMod(FMLInitializationEvent event){ //Your main initialization method
+
+		//MULTIPLAYER ABILITY
+		NetworkRegistry.instance().registerGuiHandler(this, proxy); //Registers the class that deals with GUI data
+
 		
 		//Registers CreativeTab
 		EvenMoarFoodsTab = new EvenMoarFoodsTab(CreativeTabs.getNextID(), "Even Moar Foods");
@@ -161,9 +171,6 @@ public void load(FMLPreInitializationEvent PreEvent){
              'B', Item.bread, 'S', Sausage
 			});
 	}
-	
-	@PostInit
-	public void PostLoad(FMLPostInitializationEvent PostEvent){
+
 		
 	}
-}
