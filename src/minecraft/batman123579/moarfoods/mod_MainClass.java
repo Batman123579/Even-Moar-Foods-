@@ -6,6 +6,7 @@ import net.minecraft.item.Item;
 import net.minecraft.item.ItemFood;
 import net.minecraft.item.ItemStack;
 import cpw.mods.fml.common.Mod;
+import cpw.mods.fml.common.Mod.EventHandler;
 import cpw.mods.fml.common.Mod.Init;
 import cpw.mods.fml.common.Mod.Instance;
 import cpw.mods.fml.common.Mod.PreInit;
@@ -19,7 +20,7 @@ import cpw.mods.fml.common.network.NetworkMod.SidedPacketHandler;
 import cpw.mods.fml.common.SidedProxy;
 import batman123579.moarfoods.CommonProxy;
 
-@NetworkMod(clientSideRequired=true,serverSideRequired=true, //Whether client side and server side are needed
+@NetworkMod(clientSideRequired=true,serverSideRequired=false, //Whether client side and server side are needed
 clientPacketHandlerSpec = @SidedPacketHandler(channels = {"TutorialMod"}, packetHandler = PacketHandler.class), //For clientside packet handling
 serverPacketHandlerSpec = @SidedPacketHandler(channels = {"TutorialMod"}, packetHandler = ServerPacketHandler.class)) //For serverside packet handling
 
@@ -29,7 +30,7 @@ serverPacketHandlerSpec = @SidedPacketHandler(channels = {"TutorialMod"}, packet
 
 public class mod_MainClass {
 	
-	@SidedProxy(clientSide = "batman123579.evenmoarfoods.ClientProxy", serverSide = "batman123579.evenmoarfoods.CommonProxy") //Tells Forge the location of your proxies
+	@SidedProxy(clientSide = "batman123579.moarfoods.ClientProxy", serverSide = "batman123579.moarfoods.CommonProxy") //Tells Forge the location of your proxies
 	public static CommonProxy proxy;
 
 
@@ -60,15 +61,13 @@ public static mod_MainClass instance = new mod_MainClass();
 	public static ItemFood Dough;
 	public static ItemFood Pizza;
 	public static ItemFood SausageSandwich;
+	public static ItemFood Chips;
 	
 	public static Item FireBurner;
 	
-	@PreInit
-	public void PreInit(FMLPreInitializationEvent e){
-
-	}
-
-	@Init
+	EventManager eventmanager = new EventManager();
+	
+	@EventHandler
 	public void InitTutorialMod(FMLInitializationEvent event){ //Your main initialization method
 
 		//MULTIPLAYER ABILITY
@@ -95,6 +94,7 @@ public static mod_MainClass instance = new mod_MainClass();
 		Dough = (ItemFood) new Dough(22615, 0, false).setUnlocalizedName("Dough");
 		Pizza = (ItemFood) new Pizza(22616, 0, false).setUnlocalizedName("Pizza");
 		SausageSandwich = (ItemFood) new SausageSandwich(22617, 0, false).setUnlocalizedName("SausageSandwich");
+		Chips = (ItemFood) new Chips(22618, 0, false).setUnlocalizedName("Chips");
 		
 
 		
@@ -121,6 +121,7 @@ public static mod_MainClass instance = new mod_MainClass();
 		LanguageRegistry.addName(Dough, "Dough");
 		LanguageRegistry.addName(Pizza, "Pizza");
 		LanguageRegistry.addName(SausageSandwich, "Sausage Sandwich");
+		LanguageRegistry.addName(Chips, "Chips");
 		
 		//Recipes
 		
@@ -164,7 +165,7 @@ public static mod_MainClass instance = new mod_MainClass();
 			Item.bucketWater, Item.wheat, Item.wheat
 		});
 		
-		 GameRegistry.addRecipe(new ItemStack(Tomato), new Object[]{
+		 GameRegistry.addRecipe(new ItemStack(SausageSandwich), new Object[]{
              "BBB",
              " S ",
              "BBB",

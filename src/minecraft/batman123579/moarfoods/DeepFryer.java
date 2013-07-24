@@ -16,6 +16,8 @@ import net.minecraft.inventory.IInventory;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.tileentity.TileEntity;
+import net.minecraft.tileentity.TileEntityFurnace;
+import batman123579.moarfoods.DeepFryerRecipies;
 import net.minecraft.util.Icon;
 import net.minecraft.util.MathHelper;
 import net.minecraft.world.World;
@@ -138,7 +140,8 @@ public class DeepFryer extends BlockContainer
 
             if (tileentitydeepfryer != null)
             {
-                par5EntityPlayer.displayGUIFurnace(tileentitydeepfryer);
+            	par5EntityPlayer.openGui(mod_MainClass.instance, 0/*this is the gui-specific ID, pick whatever you want*/, par1World, par2, par3, par4);
+            	/*old version: par5EntityPlayer.displayGUIFurnace(tileentitydeepfryer);*/
             }
 
             return true;

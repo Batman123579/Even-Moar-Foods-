@@ -9,8 +9,11 @@ import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.inventory.ISidedInventory;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemBlock;
+import net.minecraft.item.ItemHoe;
 import net.minecraft.item.ItemStack;
-import net.minecraft.item.crafting.FurnaceRecipes;
+import net.minecraft.item.ItemSword;
+import net.minecraft.item.ItemTool;
+import batman123579.moarfoods.DeepFryerRecipies;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.nbt.NBTTagList;
 import net.minecraft.tileentity.TileEntity;
@@ -326,7 +329,7 @@ public class TileEntityDeepFryer extends TileEntity implements ISidedInventory, 
         }
         else
         {
-            ItemStack itemstack = FurnaceRecipes.smelting().getSmeltingResult(this.furnaceItemStacks[0]);
+            ItemStack itemstack = DeepFryerRecipies.smelting().getSmeltingResult(this.furnaceItemStacks[0]);
             if (itemstack == null) return false;
             if (this.furnaceItemStacks[2] == null) return true;
             if (!this.furnaceItemStacks[2].isItemEqual(itemstack)) return false;
@@ -342,7 +345,7 @@ public class TileEntityDeepFryer extends TileEntity implements ISidedInventory, 
     {
         if (this.canSmelt())
         {
-            ItemStack itemstack = FurnaceRecipes.smelting().getSmeltingResult(this.furnaceItemStacks[0]);
+            ItemStack itemstack = DeepFryerRecipies.smelting().getSmeltingResult(this.furnaceItemStacks[0]);
 
             if (this.furnaceItemStacks[2] == null)
             {
@@ -381,13 +384,15 @@ public class TileEntityDeepFryer extends TileEntity implements ISidedInventory, 
             {
                 Block block = Block.blocksList[i];
 
-                if (i == mod_MainClass.FireBurner.itemID)
+
+                if (block == Block.field_111034_cE)
                 {
-                    return 2000;
+                    return 16000;
                 }
             }
 
 
+            if (i == mod_MainClass.FireBurner.itemID) return 4000;
             return GameRegistry.getFuelValue(par0ItemStack);
         }
     }
