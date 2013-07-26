@@ -31,6 +31,8 @@ public class DeepFryerRecipies
         this.addSmelting(Item.porkRaw.itemID, new ItemStack(mod_MainClass.Sausage), 0.7F);
         this.addSmelting(Item.bucketMilk.itemID, new ItemStack(mod_MainClass.Cheese), 0.7F);
         this.addSmelting(Item.potato.itemID, new ItemStack(mod_MainClass.Chips), 0.7F);
+        this.addSmelting(Item.sugar.itemID, new ItemStack(mod_MainClass.Toffee), 0.7F);
+        this.addSmelting(Item.egg.itemID, new ItemStack(mod_MainClass.FriedEgg), 0.7F);
         
     }
 

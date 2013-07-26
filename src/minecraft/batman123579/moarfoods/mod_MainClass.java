@@ -25,7 +25,7 @@ clientPacketHandlerSpec = @SidedPacketHandler(channels = {"TutorialMod"}, packet
 serverPacketHandlerSpec = @SidedPacketHandler(channels = {"TutorialMod"}, packetHandler = ServerPacketHandler.class)) //For serverside packet handling
 
 
-@Mod(modid = "evenmoarfood", name = "Even Moar Foods?", version = "Beta 0.3.1")
+@Mod(modid = "evenmoarfood", name = "Even Moar Foods?", version = "Beta 0.5")
 
 
 public class mod_MainClass {
@@ -62,6 +62,13 @@ public static mod_MainClass instance = new mod_MainClass();
 	public static ItemFood Pizza;
 	public static ItemFood SausageSandwich;
 	public static ItemFood Chips;
+	public static ItemFood Toffee;
+	public static ItemFood ToffeeApple;
+	public static ItemFood ToffeeStick;
+	public static ItemFood TomatoSoup;
+	public static ItemFood FriedEgg;
+	public static ItemFood PorkRibs;
+	public static ItemFood SteakRibs;
 	
 	public static Item FireBurner;
 	
@@ -95,6 +102,13 @@ public static mod_MainClass instance = new mod_MainClass();
 		Pizza = (ItemFood) new Pizza(22616, 0, false).setUnlocalizedName("Pizza");
 		SausageSandwich = (ItemFood) new SausageSandwich(22617, 0, false).setUnlocalizedName("SausageSandwich");
 		Chips = (ItemFood) new Chips(22618, 0, false).setUnlocalizedName("Chips");
+		Toffee = (ItemFood) new Toffee (22619, 0, false).setUnlocalizedName("Toffee");
+		ToffeeApple = (ItemFood) new ToffeeApple (22620, 0, false).setUnlocalizedName("ToffeeApple");
+		ToffeeStick = (ItemFood) new ToffeeStick (22621, 0, false).setUnlocalizedName("ToffeeStick");
+		TomatoSoup = (ItemFood) new TomatoSoup (22622, 0, false).setUnlocalizedName("TomatoSoup");
+		FriedEgg = (ItemFood) new FriedEgg (22623, 0, false).setUnlocalizedName("FriedEgg");
+		PorkRibs = (ItemFood) new PorkRibs (22624, 0, false).setUnlocalizedName("PorkRibs");
+		SteakRibs = (ItemFood) new SteakRibs (22625, 0, false).setUnlocalizedName("SteakRibs");
 		
 
 		
@@ -122,6 +136,13 @@ public static mod_MainClass instance = new mod_MainClass();
 		LanguageRegistry.addName(Pizza, "Pizza");
 		LanguageRegistry.addName(SausageSandwich, "Sausage Sandwich");
 		LanguageRegistry.addName(Chips, "Chips");
+		LanguageRegistry.addName(Toffee, "Toffee");
+		LanguageRegistry.addName(ToffeeApple, "Toffee Apple");
+		LanguageRegistry.addName(ToffeeStick, "Toffee Apple on a Stick");
+		LanguageRegistry.addName(TomatoSoup, "Tomato Soup");
+		LanguageRegistry.addName(FriedEgg, "Fried Egg");
+		LanguageRegistry.addName(PorkRibs, "Pork Ribs");
+		LanguageRegistry.addName(SteakRibs, "Steak Ribs");
 		
 		//Recipes
 		
@@ -165,13 +186,48 @@ public static mod_MainClass instance = new mod_MainClass();
 			Item.bucketWater, Item.wheat, Item.wheat
 		});
 		
+		GameRegistry.addShapelessRecipe(new ItemStack (ToffeeApple, 1), new Object []{
+			Item.appleRed, Toffee
+		});
+		
+		GameRegistry.addShapelessRecipe(new ItemStack (TomatoSoup, 1), new Object []{
+			Item.bowlEmpty, Tomato, Tomato
+		});
+		
 		 GameRegistry.addRecipe(new ItemStack(SausageSandwich), new Object[]{
              "BBB",
              " S ",
              "BBB",
              'B', Item.bread, 'S', Sausage
 			});
-	}
 
-		
+	 GameRegistry.addRecipe(new ItemStack(ToffeeStick), new Object[]{
+         " T ",
+         " S ",
+         "   ",
+         'S', Item.stick, 'T', ToffeeApple
+		});
+	 
+	 GameRegistry.addRecipe(new ItemStack(ToffeeStick), new Object[]{
+         "   ",
+         " T ",
+         " S ",
+         'S', Item.stick, 'T', ToffeeApple
+		});
+	 
+	 GameRegistry.addRecipe(new ItemStack(PorkRibs), new Object[]{
+         "   ",
+         "PPP",
+         "BBB",
+         'B', Item.bone, 'P', Item.porkCooked
+		});
+	 
+	 GameRegistry.addRecipe(new ItemStack(SteakRibs), new Object[]{
+         "   ",
+         "SSS",
+         "BBB",
+         'B', Item.bone, 'S', Item.beefCooked
+		});
+	 
 	}
+}
